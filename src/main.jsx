@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound.jsx'
 import AuthPage from './pages/AuthPage.jsx'
 import { Provider } from 'react-redux'
 import { store } from './redux/store.js'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider  router={router} />
+      <AuthProvider>
+        <RouterProvider  router={router} />
+      </AuthProvider>
     </Provider>
   </StrictMode>,
 )
