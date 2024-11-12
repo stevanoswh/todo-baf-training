@@ -1,41 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import TodoForm from '../components/TodoForm'
 import TodoList from '../components/TodoList'
-import { addTodo, deleteTodo, fetchTodos, toggleTodo } from '../services/todoService'
+import { useDispatch, useSelector } from 'react-redux'
+import { addTodoThunk, deleteTodoThunk, fetchTodosThunk, toggleTodoThunk } from '../redux/slices/todoSlice'
+
 
 export default function TodoPage() {
-
-  const [todos, setTodos] = useState([])
+  const dispatch = useDispatch()
+  const {items: todos} = useSelector((state) => state.todos)
 
   useEffect(() => {
-    const fetch = async () => {
-      const data = await fetchTodos()
-      setTodos(data)
-    }
-
-    fetch()
-
+    dispatch(fetchTodosThunk())
   }, [])
 
-  const handleAddTodo = async (title) => {
-    const newTodo = await addTodo(title)
-    setTodos([...todos, newTodo])
+  const handleAddTodo = (title) => {
+    dispatch(addTodoThunk(title))
   }
 
   const handleToggleTodo = async (id) => {
     const todoToUpdate = todos.find(todo => todo.id === id)
-    if (todoToUpdate){
-      const updatedTodo = await toggleTodo(id, !todoToUpdate.completed)
-      setTodos(todos.map(todo => 
-        todo.id === id ?  updatedTodo : todo
-      ))
-    }
-    
+    dispatch(toggleTodoThunk({id, completed: !todoToUpdate.completed}))
   }
 
-  const handleDeleteTodo = async (id) => {
-    await deleteTodo(id)
-    setTodos(todos.filter(todo => todo.id  !== id))
+  const handleDeleteTodo =  (id) => {
+    dispatch(deleteTodoThunk(id))
+    console.log("delete todo", id)
   }
 
   return (

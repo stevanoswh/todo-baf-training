@@ -7,6 +7,8 @@ import TodoPage from './pages/TodoPage.jsx'
 import CountPage from './pages/CountPage.jsx'
 import NotFound from './pages/NotFound.jsx'
 import AuthPage from './pages/AuthPage.jsx'
+import { Provider } from 'react-redux'
+import { store } from './redux/store.js'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider  router={router} />
+    <Provider store={store}>
+      <RouterProvider  router={router} />
+    </Provider>
   </StrictMode>,
 )

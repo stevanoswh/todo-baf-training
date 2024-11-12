@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addTodo, fetchTodos, toggleTodo } from "../../services/todoService";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { addTodo, fetchTodos, toggleTodo, deleteTodo } from "../../services/todoService";
 
 export const fetchTodosThunk = createAsyncThunk('todos/fetchTodos', async () => {
     return await fetchTodos()
@@ -9,12 +9,13 @@ export const addTodoThunk = createAsyncThunk('todos/addTodo', async (title) => {
     return await addTodo(title)
 })
 
-export const toggleTodoThunk = createAsyncThunk('todos/toggleTodo', async () => {
-    return await toggleTodo()
+export const toggleTodoThunk = createAsyncThunk('todos/toggleTodo', async ({id, completed}) => {
+    return await toggleTodo(id, completed)
 })
 
-export const deleteTodoThunk = createAsyncThunk('todos/deleteTodo', async () => {
-    return await deleteTodo()
+export const deleteTodoThunk = createAsyncThunk('todos/deleteTodo', async (id) => {
+    await deleteTodo(id)
+    return id
 })
 
 const todoSlice = createSlice({
@@ -48,7 +49,7 @@ const todoSlice = createSlice({
                 }
             })
             .addCase(deleteTodoThunk.fulfilled, (state, action) => {
-                state.items = state.items.filter(item => item.id !== action.payload.id)
+                state.items = state.items.filter(item => item.id !== action.payload)
             })
     }
 })

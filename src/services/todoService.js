@@ -39,7 +39,7 @@ export const toggleTodo = async (id, completed) => {
 
 export const deleteTodo = async (id) => {
     const response = await fetch(`${API_URL}/${id}`, {
-        method: 'DELETE',
+        method: 'DELETE'
     })
     if (!response.ok) throw new Error('Failed to delete todo')
 }
