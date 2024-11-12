@@ -4,7 +4,6 @@ export default function TodoItem({todo, toggleTodo, deleteTodo}) {
 
     const completed = todo.completed ?  'completed' : '';
 
-
     return (
         <li className='todoItem'>
             <span
@@ -13,7 +12,7 @@ export default function TodoItem({todo, toggleTodo, deleteTodo}) {
             >
                 {todo.title}
             </span>
-            <button onClick={() => deleteTodo(todo.id)}>delete</button>
+            <button className='deleteButton' onClick={() => deleteTodo(todo.id)}>delete</button>
         </li>
     )
 }

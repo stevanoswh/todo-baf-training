@@ -1,14 +1,16 @@
 
+import { Outlet } from 'react-router-dom'
 import './App.css'
+import Header from './components/Header'
 
-import TodoPage from './pages/TodoPage'
 
 
 function App() {
   
   return (
-    <div className='container'>
-      <TodoPage/>
+    <div >
+      <Header/>
+      <Outlet/>
     </div>
   )
 }
